@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="article">
+      <h2><span>关于</span> {{ company.name }}</h2>
+      <div class="clr"></div>
+        <p><strong>{{ company.about }}</strong></p>
+    </div>
+    <div class="article">
+      <h2><span>我们的</span> 职责</h2>
+      <div class="clr"></div>
+      <p><strong>{{ company.mission }}</strong></p>
+    </div>
+{% endblock %}

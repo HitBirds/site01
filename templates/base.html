@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+<title>{{ cite.name }}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% block external_css %}{% endblock %}
+<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "css/menu-css.css" %}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{% static "css/coin-slider.css" %}" />
+<script type="text/javascript" src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/script.js" %}"></script>
+<script type="text/javascript" src="{% static "js/coin-slider.min.js" %}"></script>
+
+</head>
+
+<body>
+<div class="main">
+  <div class="header">
+    <div class="header_resize">
+      <div class="menu_nav">
+        <ul>
+          <li class="active"><a href="{% url 'index' %}"><span>首页</span></a></li>
+          <li><a href="{% url 'support' %}"><span>服务</span></a></li>
+          <li><a href="{% url 'about' %}"><span>简介</span></a></li>
+          <li><a href="{% url 'blog' %}"><span>博客</span></a></li>
+          <li><a href="{% url 'contact' %}"><span>联系</span></a></li>
+        </ul>
+      </div>
+      <div class="clr"></div>
+      <div class="logo">
+        <h1><a href="index.html">{{ cite.header}}</a></h1>
+      </div>
+      <div class="clr"></div>
+      <div class="slider">
+        <div id="coin-slider">
+            {% for banner in banner_list %}
+            <a href="{{ banner.url }}"><img src="{{ banner.img.url }}" width="960" height="360" alt="" /> </a>
+            {% endfor %}
+        </div>
+        <div class="clr"></div>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="content_resize">
+      <div class="mainbar">
+        {% block content %}
+
+        {%  endblock %}
+      </div>
+      <div class="sidebar">
+        <div class="searchform">
+          <form id="formsearch" name="formsearch" method="post" action="{% url 'search' %}">{% csrf_token %}
+            <span>
+            <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" value="搜一搜:" type="text" />
+            </span>
+            <input name="button_search" src="{% static "images/search.gif" %}" class="button_search" type="image" />
+          </form>
+        </div>
+        <div class="clr"></div>
+        <div class="gadget">
+          <h2 class="star"><span>目</span> 录</h2>
+          <div class="clr"></div>
+            <div class="fold_menu">
+                <ul>
+                    {% for key,value in category_dict.items %}
+                        <li><a {% if article.category.name == key %}class="active"{% endif %} href="##">{{ key }}</a>
+                            <ul {% if article.category.name == key %} style="display: block;"{% endif %}>
+                                {% for atc in value %}
+                                    <li><a href="{% url 'blog' atc.slug %}">{{ atc.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="gadget">
+          <h2 class="star"><span>相关推荐</span></h2>
+          <div class="clr"></div>
+          <ul class="ex_menu">
+            <li><a href="http://www.dreamtemplate.com/">DreamTemplate</a><br />
+              Over 6,000+ Premium Web Templates</li>
+            <li><a href="http://www.templatesold.com/">TemplateSOLD</a><br />
+              Premium WordPress &amp; Joomla Themes</li>
+            <li><a href="http://www.imhosted.com/">ImHosted.com</a><br />
+              Affordable Web Hosting Provider</li>
+            <li><a href="http://www.megastockphotos.com/">MegaStockPhotos</a><br />
+              Unlimited Amazing Stock Photos</li>
+            <li><a href="http://www.evrsoft.com/">Evrsoft</a><br />
+              Website Builder Software &amp; Tools</li>
+            <li><a href="http://www.csshub.com/">CSS Hub</a><br />
+              Premium CSS Templates</li>
+          </ul>
+        </div>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="fbg">
+    <div class="fbg_resize">
+      <div class="col c1">
+        <h2>图册</h2>
+          {% for image in image_list %}
+            <a href="{{ image.url }}"><img src="{{ image.img.url }}" width="75" height="75" alt="" class="gal" /></a>
+          {% endfor %}
+      </div>
+      <div class="col c2">
+        <h2><span>服务</span>概要</h2>
+        <p>{{ company.support }}</p>
+        <ul class="fbg_ul">
+            {% for service in company.services %}
+          <li><a href="{{ service.url }}">{{ service.name }}</a></li>
+            {% endfor %}
+        </ul>
+      </div>
+      <div class="col c3">
+        <h2><span>联系</span>我们</h2>
+        <p>{{ company.mission }}</p>
+        <p class="contact_info"> <span>地址:</span> {{ company.address }}<br />
+          <span>电话:</span> {{ company.telephone }} <br />
+          <span>QQ:</span> {{ company.qq }}<br />
+            <span>Git:</span><a href="{{ company.git }}"> {{ company.git }}</a><br />
+          <span>电子邮箱:</span> <a href="contact.html">{{ company.email }}</a> </p>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer_resize">
+      <p class="lf">&copy; Copyright <a href="#">{{ cite.copy_right }}</a>.</p>
+      <p class="rf">Design by <a href="http://www.dreamtemplate.com/">Web Templates</a></p>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="{% static "js/menu-min.js" %}"></script>
+<script type="text/javascript">
+  $(document).ready(function (){
+    $(".fold_menu ul li").fold_menu();
+  });
+  </script>
+{% block external_js %}{% endblock %}
+</html>

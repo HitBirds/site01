@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <div class="mainbar">
+    <div class="article">
+      <h2><span>联系我们</span></h2>
+      <div class="clr"></div>
+      <p></p>
+    </div>
+    <div class="article">
+      <h2><span>向我们发送邮件</span></h2>
+      <div class="clr"></div>
+      <form action="{% url 'contact' %}" method="post" id="sendemail">{% csrf_token %}
+        <ol>
+          <li>
+            <label for="name">姓名 (*)</label>
+            <input id="name" name="name" class="text" />
+          </li>
+          <li>
+            <label for="email">您的邮箱 (*)</label>
+            <input id="email" name="email" class="text" />
+          </li>
+          <li>
+            <label for="message">内容</label>
+            <textarea id="message" name="message" rows="8" cols="50"></textarea>
+          </li>
+          <li>
+            <input type="image" name="imageField" id="imageField" placeholder="发送" src="{% static "images/submit.gif" %}" class="send" />
+            <div class="clr"></div>
+          </li>
+        </ol>
+      </form>
+    </div>
+  </div>
+{% endblock %}

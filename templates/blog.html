@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+{% block external_css %}
+<link rel="stylesheet" href="{% static "markdown/css/editormd.css" %}" />
+{% endblock %}
+{% block content %}
+    <div id="art-content" class="article">
+        <h2><span>{{ article.title}}</span></h2>
+      <div class="clr"></div>
+      <p>作者 <a href="#">{{ article.author.name }}</a> <span>&nbsp;&bull;&nbsp;</span> 归类于 <a href="#">{{ article.category.name }}</a></p>
+        <div id="md-content"><textarea>{{ article.content }}</textarea></div>
+      <p><a href="#"><strong>评论 {{ article.n_comments }}</strong></a> <span>&nbsp;&bull;&nbsp;</span> {{ article.pub_time }} <span>&nbsp;&bull;&nbsp;</span> <a href="#"><strong>Edit</strong></a></p>
+    </div>
+    <div class="article">
+      <h2><span>{{ article.n_comments }}</span> 评论</h2>
+      <div class="clr"></div>
+        {% for comment in article.comment_list %}
+      <div class="comment"> <a href="#"><img src="{% get_media_prefix %}{{ comment.head_img }}" width="40" height="40" alt="" class="userpic" /></a>
+        <p><a href="#">{{ comment.username }}</a> Says:<br />
+          {{ comment.comment_time }}</p>
+          <div id = 'comment-{{ forloop.counter }}'><textarea>{{ comment.content }}</textarea>
+          </div>
+      </div>
+        {% endfor %}
+    </div>
+    <div class="article">
+      <h2><span>回复</span></h2>
+      <div class="clr"></div>
+      <form action="{% url 'blog' %}" method="post" id="leavereply">{% csrf_token %}
+        <ol>
+          <li>
+            <label for="name">昵称 (*)</label>
+            <input id="name" name="name" class="text" />
+          </li>
+          <li>
+            <label for="email">电子邮件 (*)</label>
+            <input id="email" name="email" class="text" />
+          </li>
+          <li>
+            <label for="message">你的留言</label>
+              <div id="layout" class="btns" style="margin:0;">
+                  <button id="create-btn" type="button">打开markdown编辑器</button>
+                  <button id="remove-btn" type="button">关闭markdown编辑器</button>
+              </div>
+          </li>
+            <input type = "hidden" name="blog" value="{{ article.slug }}" />
+          <li>
+            <input type="image" name="imageField" id="imageField" placeholder="提交" src="{% static "images/submit.gif" %}" class="send" />
+            <div class="clr"></div>
+          </li>
+        </ol>
+
+      </form>
+    </div>
+{% endblock %}
+{% block external_js %}
+
+{#    <script src = "{% static "markdown/js/jquery.min.js" %}"></script>#}
+    <script src = "{% static "markdown/js/image_csrf_upload.js" %}"></script>
+    <script src = "{% static "markdown/lib/marked.min.js" %}"></script>
+    <script src = "{% static "markdown/lib/prettify.min.js" %}"></script>
+    <script src = "{% static "markdown/lib/raphael.min.js" %}"></script>
+    <script src = "{% static "markdown/lib/underscore.min.js" %}"></script>
+    <script src = "{% static "markdown/lib/sequence-diagram.min.js" %}"></script>
+    <script src = "{% static "markdown/lib/flowchart.min.js" %}"></script>
+    <script src = "{% static "markdown/lib/jquery.flowchart.min.js" %}"></script>
+    <script src = "{% static "markdown/js/editormd.min.js" %}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('div.comment div').each(function () {
+                var testEditormdView1 = editormd.markdownToHTML(this.id, {
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                emoji           : true,
+                taskList        : true,
+                tex             : true,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true,  // 默认不解析
+            });
+                this.removeAttribute("class");
+            });
+
+            var testEditormdView2;
+            testEditormdView2 = editormd.markdownToHTML("md-content", {
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                emoji           : true,
+                taskList        : true,
+                tex             : true,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true,  // 默认不解析
+            });
+            $('#md-content').removeAttr("class");
+        });
+        var Editormd;
+        $(function() {
+            $("#create-btn").click(function(){
+                $(function() {
+                        $('#layout').append("<div id = \"editormd\"></div>");
+                        Editormd = editormd("editormd", {
+                        name:'md_content',
+                        width:900,
+                        height:640,
+                        path : "{% static "markdown/lib/" %}",// Autoload modules mode, codemirror, marked... dependents libs path
+                        tex:true,
+                        emoji:true,
+                        flowChart:true,
+                        sequenceDiagram:true,
+                        imageUpload:true,
+                        imageFormats:["jpg","jpeg","gif","png","bmp","webp"],
+                        imageUploadURL:"/markdown/uploadimage/",
+                        onload:function () {
+                            console.log('onload',this)
+                        }
+                    });
+                });
+            });
+
+            $("#remove-btn").click(function() {
+                Editormd.editor.remove();
+            });
+        });
+
+    </script>
+{% endblock %}

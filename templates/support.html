@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="article">
+      <h2> {{ company.name }} <span>的服务</span></h2>
+      <div class="clr"></div>
+      <p>{{ company.support }}</p>
+      <ul class="sb_menu">
+          {% for service in company.services %}
+        <li><a href="{{ service.url }}"><strong>{{ service.name }}</strong></a></li>
+          {% endfor %}
+      </ul>
+    </div>
+{% endblock %}

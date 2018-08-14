@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    {% for article in contacts %}
+    <div class="article">
+  <h2><span>{{ article.title }}</span></h2>
+  <p class="infopost">发表于 <span class="date"> {{ article.pub_time }}</span> by <a href="about.html">{{ article.author__name }}</a> &nbsp;&nbsp;|&nbsp;&nbsp; 归类于 <a href="#">{{ article.category__name }}</a>&nbsp;&nbsp; <a href="{% url 'blog' blog_slug=article.slug %}" class="com">评论 <span>{{ article.n_comments }}</span></a></p>
+  <div class="clr"></div>
+  <div class="img"><img src="{{ article.banner.url }}" width="620" height="154" alt="" class="fl" /></div>
+  <div class="post_content">
+      {{ article.abstract }}
+    <p class="spec"><a href="{% url 'blog' blog_slug=article.slug %}" class="rm">Read more...</a></p>
+  </div>
+  <div class="clr"></div>
+</div>
+    {% endfor %}
+    {% if contacts.paginator.num_pages %}
+    <p class="pages"><small>当前 {{ contacts.number }} 共 {{ contacts.paginator.num_pages }}页</small>
+        {% if contacts.has_previous %}<a href="?page={{ contacts.previous_page_number }}">{{ contacts.previous_page_number }}</a>{% endif %}
+        <span>{{ contacts.number }}</span>
+        {% if contacts.has_next %}<a href="?page={{ contacts.next_page_number }}">{{ contacts.next_page_number }}</a>{% endif %}
+        <a href="?page={{ contacts.paginator.num_pages }}">&raquo;</a>
+    {% endif %}
+{% endblock %}
+
+
+

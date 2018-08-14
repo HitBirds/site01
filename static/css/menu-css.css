@@ -1,0 +1,56 @@
+
+.fold_menu ul li {
+	margin: 0; padding: 0; line-height: 1.2em;
+	display:block;
+	padding-top:2px;
+	margin-bottom:5px;
+	background: url(../images/zakladka.png) top left no-repeat;
+	list-style:none;
+	overflow:visible;
+}
+.fold_menu a {color:#929292; text-decoration:none; font-size:1.1em;}
+.fold_menu a:hover {color:#292927; text-decoration:underline;}
+.fold_menu ul li a {
+	display:block;
+	height:34px; 
+	margin-top:0px;
+	padding-top:10px;
+	padding-left:35px;
+	font-size:14px;
+	outline:none;
+}
+
+.fold_menu ul li .active {
+	background:url(../images/on.png) top right no-repeat;
+}
+
+.fold_menu ul li .inactive {
+	background:url(../images/off.png) top right no-repeat;
+}
+.fold_menu ul li ul {
+	display:none; 
+	margin-top:-4px;
+	margin-bottom:20px;   
+}
+.fold_menu ul li ul li ul {
+	margin-bottom:5px;
+}
+.fold_menu ul li ul li {
+	display:block;
+	background:none;
+	font-size:12px;
+	list-style:circle;
+	margin-bottom:0px;
+	margin-top:0px;
+	padding-top:0px;
+	padding-bottom:0px;
+	padding-left:1px;
+	margin-left:35px;
+}
+.fold_menu ul li ul li a {
+	color:#929292;
+	background:none;
+	font-size:12px;
+	height:15px;
+	padding-left:0px; 
+}
