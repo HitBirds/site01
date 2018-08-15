@@ -99,7 +99,7 @@ class ContactView(View):
 
             email_title = "geekcug User Send"
             email_body = 'name:{}\nemail:{}\ncontent:{}'.format(name,email,message)
-            email_to = "hcg19113225@gmail.com"
+            email_to = "#####"
             send_status = send_mail(email_title,email_body,EMAIL_FROM,[email_to])
             if send_status:
                 return HttpResponse('发送成功')
