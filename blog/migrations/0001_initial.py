@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('pub_time', models.DateTimeField(auto_now_add=True, verbose_name=False)),
                 ('update_time', models.DateTimeField(verbose_name=True)),
                 ('content', models.TextField()),
-                ('author', models.ForeignKey(default='未知', on_delete=django.db.models.deletion.SET_DEFAULT, related_name='blogs', to='user.Company')),
+                ('author', models.ForeignKey(default=1, on_delete=django.db.models.deletion.SET_DEFAULT, related_name='blogs', to='user.Company')),
             ],
         ),
         migrations.CreateModel(
