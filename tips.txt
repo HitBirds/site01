@@ -1,0 +1,8 @@
+ps ax | grep uwsgi
+15005 pts/4    S      0:00 /ve/path/bin/uwsgi --ini config.ini
+15006 pts/4    S      0:00 /ve/path/bin/uwsgi --ini config.ini
+15007 pts/4    S      0:00 /ve/path/bin/uwsgi --ini config.ini
+
+killall -s INT /ve/path/bin/uwsgi
+
+If you don't have killall, you can also do sudo pkill -f uwsgi -9 ¨C

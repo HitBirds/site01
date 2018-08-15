@@ -23,9 +23,12 @@ class BlogView(View):
             except:
                 pass
         else:
-            article = Blog.objects.last()
-            article.n_comments = article.comments.count()
-            article.comment_list = article.comments.values('username', 'head_img', 'comment_time', 'content')
+            try:
+                article = Blog.objects.last()
+                article.n_comments = article.comments.count()
+                article.comment_list = article.comments.values('username', 'head_img', 'comment_time', 'content')
+            except:
+                pass
         context['article'] = article
         return render(request, 'blog.html', context=context)
 
