@@ -491,3 +491,10 @@ ol li .send {
 a {
 	outline:none;
 }
+.btns button{
+	padding: 8px 10px;
+	background:#fff;
+	border: 1px solid #ddd;
+	border-radius:3px;
+	cursor:pointer;
+	text-align:center;
