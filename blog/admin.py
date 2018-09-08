@@ -22,9 +22,9 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ['title','author','category','abstract']
 
     def img_std(self, obj):
-        if obj.img:
+        if obj.banner:
             return format_html(
-                '<img src="{}" />', obj.img.thumbnail.url
+                '<img src="{}" />', obj.banner.thumbnail.url
             )
         else:
             return "上传图片"
